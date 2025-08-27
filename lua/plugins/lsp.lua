@@ -141,7 +141,6 @@ return {
           },
         },
       },
-      dockerls = {},
       terraformls = {},
     }
 
