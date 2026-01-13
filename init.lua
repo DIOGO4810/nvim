@@ -1,6 +1,6 @@
 require 'core.options' -- Load general options
-require 'core.keymaps' -- Load general keymaps
 require 'core.snippets' -- Custom code snippets
+vim.opt.clipboard = 'unnamedplus'
 
 -- Set up the Lazy plugin manager
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -16,6 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Set up plugins
 require('lazy').setup {
   require 'plugins.neotree',
+
   require 'plugins.colortheme',
   require 'plugins.bufferline',
   require 'plugins.lualine',
@@ -32,5 +33,6 @@ require('lazy').setup {
   require 'plugins.icons',
 }
 
+require 'core.keymaps' -- Load general keymaps
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
