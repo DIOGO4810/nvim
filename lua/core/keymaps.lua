@@ -4,10 +4,10 @@ vim.g.maplocalleader = ' '
 
 -- Disable the spacebar key's default behavior in Normal and Visual modes
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
 -- For conciseness
 local opts = { noremap = true, silent = true }
 
+vim.keymap.set('n', '<leader>e', ':Neotree focus<CR>', { noremap = true, silent = true })
 -- save file
 vim.keymap.set('n', '<C-s>', '<cmd> w <CR>', opts)
 
@@ -19,8 +19,8 @@ vim.keymap.set('n', '<C-q>', '<cmd> q <CR>', opts)
 
 -- delete single character without copying into register
 vim.keymap.set('n', 'x', '"_x', opts)
-vim.keymap.set('n', 'd', '"_d', opts)
-vim.keymap.set('n', 'c', '"_c', opts)
+vim.keymap.set('n', '<leader>d', '"_d', opts)
+vim.keymap.set('v', '<leader>d', '"_d', opts)
 
 -- Vertical scroll and center
 vim.keymap.set('n', '<C-d>', '<C-d>zz', opts)
@@ -79,5 +79,4 @@ vim.keymap.set('n', ']d', function()
   vim.diagnostic.jump { count = 1, float = true }
 end, { desc = 'Go to next diagnostic message' })
 
-vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
