@@ -144,7 +144,30 @@ return {
       html = {},
       cssls = {},
       ts_ls = {},
-      pylsp = { settings = { pylsp = { plugins = { pyflakes = { enabled = false } } } } },
+      ruff = {
+        on_attach = function(client, _)
+          -- Let Ruff handle linting/formatting; no overlap with BasedPyright
+          client.server_capabilities.hoverProvider = false -- disable hover (Pyright handles this)
+        end,
+        init_options = {
+          settings = {
+            args = {},
+          },
+        },
+      },
+      basedpyright = {
+        settings = {
+          basedpyright = {
+            disableOrganizeImports = true, -- Ruff will handle import sorting
+            analysis = {
+              typeCheckingMode = 'basic', -- can be: off, basic, standard, strict
+              autoImportCompletions = true,
+              diagnosticMode = 'workspace',
+              useLibraryCodeForTypes = true,
+            },
+          },
+        },
+      },
       dockerls = {},
       sqlls = {},
       terraformls = {},
