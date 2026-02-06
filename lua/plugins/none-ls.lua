@@ -14,6 +14,7 @@ return {
       ensure_installed = {
         'shfmt', -- Shell formatter
         'checkmake', -- linter for Makefiles
+        'clang_format',
         -- 'stylua', -- lua formatter; Already installed via Mason
       },
       automatic_installation = true,
@@ -24,6 +25,7 @@ return {
       formatting.stylua,
       formatting.shfmt.with { args = { '-i', '4' } },
       formatting.terraform_fmt,
+      formatting.clang_format,
     }
 
     local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
