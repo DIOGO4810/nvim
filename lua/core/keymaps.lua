@@ -21,6 +21,8 @@ vim.keymap.set('n', '<C-q>', '<cmd> q <CR>', opts)
 vim.keymap.set('n', 'x', '"_x', opts)
 vim.keymap.set('n', '<leader>d', '"_d', opts)
 vim.keymap.set('v', '<leader>d', '"_d', opts)
+vim.keymap.set('n', '<leader>c', '"_c', opts)
+vim.keymap.set('v', '<leader>c', '"_c', opts)
 
 -- Vertical scroll and center
 vim.keymap.set('n', '<C-d>', '<C-d>zz', opts)
