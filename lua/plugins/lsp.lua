@@ -44,6 +44,7 @@ return {
         --  This is where a variable was first declared, or where a function is defined, etc.
         --  To jump back, press <C-t>.
         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+        map('<C-k>', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
         -- Find references for the word under your cursor.
         map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -128,7 +129,7 @@ return {
       clangd = {
         cmd = { 'clangd' },
         filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
-        root_dir = require('lspconfig').util.root_pattern('compile_commands.json', '.git'),
+        root_markers = { 'compile_commands.json', '.git' },
       },
       lua_ls = {
         settings = {
@@ -141,6 +142,11 @@ return {
           },
         },
       },
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
       html = {},
       cssls = {},
       ts_ls = {},
@@ -160,7 +166,16 @@ return {
           basedpyright = {
             disableOrganizeImports = true, -- Ruff will handle import sorting
             analysis = {
+<<<<<<< Updated upstream
               typeCheckingMode = 'basic', -- can be: off, basic, standard, strict
+=======
+              typeCheckingMode = 'off', -- can be: off, basic, standard, strict
+              reportOptionalMemberAccess = false,
+              reportOptionalCall = false,
+              reportOptionalSubscript = false,
+              reportOptionalOperand = false,
+              reportArgumentType = false,
+>>>>>>> Stashed changes
               autoImportCompletions = true,
               diagnosticMode = 'workspace',
               useLibraryCodeForTypes = true,
@@ -170,6 +185,10 @@ return {
       },
       dockerls = {},
       sqlls = {},
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
       terraformls = {},
       jsonls = {},
       yamlls = {},
@@ -178,7 +197,8 @@ return {
     -- Inicializa cada server
     for server, cfg in pairs(servers) do
       cfg.capabilities = vim.tbl_deep_extend('force', {}, capabilities, cfg.capabilities or {})
-      require('lspconfig')[server].setup(cfg)
+      vim.lsp.config(server, cfg)
+      vim.lsp.enable(server)
     end
 
     -- Instala servers via mason
