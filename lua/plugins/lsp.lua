@@ -142,12 +142,7 @@ return {
           },
         },
       },
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
-      html = {},
+     html = {},
       cssls = {},
       ts_ls = {},
       ruff = {
@@ -166,16 +161,12 @@ return {
           basedpyright = {
             disableOrganizeImports = true, -- Ruff will handle import sorting
             analysis = {
-<<<<<<< Updated upstream
-              typeCheckingMode = 'basic', -- can be: off, basic, standard, strict
-=======
               typeCheckingMode = 'off', -- can be: off, basic, standard, strict
               reportOptionalMemberAccess = false,
               reportOptionalCall = false,
               reportOptionalSubscript = false,
               reportOptionalOperand = false,
               reportArgumentType = false,
->>>>>>> Stashed changes
               autoImportCompletions = true,
               diagnosticMode = 'workspace',
               useLibraryCodeForTypes = true,
@@ -185,11 +176,7 @@ return {
       },
       dockerls = {},
       sqlls = {},
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
-      terraformls = {},
+     terraformls = {},
       jsonls = {},
       yamlls = {},
     }
