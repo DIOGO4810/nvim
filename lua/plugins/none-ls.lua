@@ -2,49 +2,41 @@ return {
   'nvimtools/none-ls.nvim',
   dependencies = {
     'nvimtools/none-ls-extras.nvim',
-    'jayp0521/mason-null-ls.nvim', -- ensure dependencies are installed
+    'jayp0521/mason-null-ls.nvim',
   },
   config = function()
     local null_ls = require 'null-ls'
-    local formatting = null_ls.builtins.formatting -- to setup formatters
-    local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 
-    -- Formatters & linters for mason to install
     require('mason-null-ls').setup {
-      ensure_installed = {
-        'shfmt', -- Shell formatter
-        'checkmake', -- linter for Makefiles
-        'clang_format',
-        -- 'stylua', -- lua formatter; Already installed via Mason
-      },
+      ensure_installed = { 'shfmt', 'checkmake', 'clang_format', 'rustfmt' },
       automatic_installation = true,
     }
 
-    local sources = {
-      diagnostics.checkmake,
-      formatting.stylua,
-      formatting.shfmt.with { args = { '-i', '4' } },
-      formatting.terraform_fmt,
-      formatting.clang_format,
+    null_ls.setup {
+      sources = {
+        null_ls.builtins.diagnostics.checkmake,
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.shfmt.with { args = { '-i', '4' } },
+        null_ls.builtins.formatting.terraform_fmt,
+        null_ls.builtins.formatting.clang_format,
+        null_ls.builtins.formatting.rustfmt,
+      },
     }
 
-    local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-    null_ls.setup {
-      -- debug = true, -- Enable debug mode. Inspect logs with :NullLsLog.
-      sources = sources,
-      -- you can reuse a shared lspconfig on_attach callback here
-      on_attach = function(client, bufnr)
-        if client:supports_method 'textDocument/formatting' then
-          vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
-          vim.api.nvim_create_autocmd('BufWritePre', {
-            group = augroup,
-            buffer = bufnr,
-            callback = function()
-              vim.lsp.buf.format { async = false }
-            end,
-          })
-        end
+    -- Criar o grupo para não duplicar autocomandos
+    local augroup = vim.api.nvim_create_augroup('LspFormatting', { clear = true })
+
+    -- O Autocmd simplificado e direto (Sem filtros de nome que falham)
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      group = augroup,
+      pattern = '*',
+      callback = function(args)
+        -- Corre exatamente o comando que tu usas manualmente e que funciona!
+        vim.lsp.buf.format {
+          bufnr = args.buf,
+          async = false,
+        }
       end,
-    }
+    })
   end,
 }

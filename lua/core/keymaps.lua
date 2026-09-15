@@ -75,6 +75,10 @@ vim.keymap.set('v', 'p', '"_dP', opts)
 -- Copy entire file to clipboard
 vim.keymap.set('n', '<leader>y', '<cmd>%yank +<CR>', { noremap = true, silent = true, desc = 'Copy entire file' })
 
+-- Find and replace (:%s)
+vim.keymap.set('n', '<leader>rs', ':%s///cg<Left><Left><Left><Left>', { noremap = true, desc = 'Find & replace with confirm' })
+vim.keymap.set('n', '<leader>ra', ':%s///g<Left><Left><Left>', { noremap = true, desc = 'Find & replace all' })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', function()
   vim.diagnostic.jump { count = -1, float = true }

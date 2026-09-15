@@ -82,7 +82,12 @@ return {
         -- word under your cursor when your cursor rests there for a little while.
         --    See `:help CursorHold` for information about when this is executed
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
+
         local client = vim.lsp.get_client_by_id(event.data.client_id)
+        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_hover) then
+          map('K', vim.lsp.buf.hover, '[H]over')
+        end
+
         if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
           local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -142,7 +147,49 @@ return {
           },
         },
       },
-     html = {},
+      jdtls = {
+        cmd = {
+          vim.fn.stdpath 'data' .. '/mason/bin/jdtls',
+          '--java-executable',
+          '/usr/lib/jvm/java-21-openjdk-amd64/bin/java',
+        },
+        filetypes = { 'java' },
+        root_markers = {
+          '.git',
+          'mvnw',
+          'gradlew',
+          'pom.xml',
+          'build.gradle',
+          'build.gradle.kts',
+          'settings.gradle',
+          'settings.gradle.kts',
+        },
+      },
+      rust_analyzer = {
+        filetypes = { 'rust' },
+        root_markers = { 'Cargo.toml', 'rust-project.json', '.git' },
+        settings = {
+          ['rust-analyzer'] = {
+            -- 1. Reativamos o checkOnSave para quando você salvar de fato usar o clippy
+            checkOnSave = true,
+            check = {
+              command = 'clippy',
+            },
+            -- 2. Ativa o motor interno de análise em tempo real para macros e tipos
+            procMacro = {
+              enable = true,
+            },
+            diagnostics = {
+              enable = true,
+              -- Permite que o rust-analyzer mostre erros de sintaxe/tipos enquanto você digita
+              experimental = {
+                enable = true,
+              },
+            },
+          },
+        },
+      },
+      html = {},
       cssls = {},
       ts_ls = {},
       ruff = {
@@ -176,7 +223,7 @@ return {
       },
       dockerls = {},
       sqlls = {},
-     terraformls = {},
+      terraformls = {},
       jsonls = {},
       yamlls = {},
     }
